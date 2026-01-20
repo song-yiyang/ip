@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Socket {
@@ -5,13 +6,25 @@ public class Socket {
     private static final String LOGO = "Hello! I'm Socket\n\tWhat can I do for you?";
     private static final String GOODBYE = "Bye. Hope to see you again soon!";
 
-    private static int numTasks = 0;
-    private static final Task[] tasks = new Task[100];
+    private static final ArrayList<Task> tasks = new ArrayList<>();
 
     private static void printAddedTask() {
         System.out.println("\tGot it. I've added this task:");
-        System.out.println("\t\t" + Socket.tasks[Socket.numTasks-1]);
-        System.out.println("\tNow you have " + Socket.numTasks + " tasks in the list.");
+        System.out.println("\t\t" + Socket.tasks.get(Socket.tasks.size() - 1));
+        System.out.println("\tNow you have " + Socket.tasks.size() + " tasks in the list.");
+    }
+
+    private static int getIndex(Scanner scanner, String msg) throws SocketException {
+        try {
+            String indexString = scanner.nextLine().strip();
+            int index = Integer.parseInt(indexString) - 1;
+            if (index >= Socket.tasks.size()) {
+                throw new SocketException("You only have " + Socket.tasks.size() + " tasks!");
+            }
+            return index;
+        } catch (NumberFormatException e) {
+            throw new SocketException("Invalid parameters. Usage: " + msg + " <index>");
+        }
     }
 
     public static void main(String[] args) {
@@ -36,34 +49,24 @@ public class Socket {
                 }
                 case "list" -> {
                     System.out.println("\tHere are the tasks in your list:");
-                    for (int i = 0; i < Socket.numTasks; i++) {
-                        System.out.println('\t' + String.valueOf(i + 1) + ". " + Socket.tasks[i]);
+                    for (int i = 0; i < Socket.tasks.size(); i++) {
+                        System.out.println('\t' + String.valueOf(i + 1) + ". " + Socket.tasks.get(i));
                     }
                 }
                 case "mark" -> {
-                    int index = scanner.nextInt() - 1;
-                    if (index >= Socket.numTasks) {
-                        System.out.println("\tYou only have " + String.valueOf(Socket.numTasks) + " tasks!");
-                    } else {
-                        Socket.tasks[index].markAsDone();
-                        System.out.println("\tNice! I've marked this task as done:");
-                        System.out.println("\t" + Socket.tasks[index]);
-                    }
+                    int index = getIndex(scanner, "mark");
+                    Socket.tasks.get(index).markAsDone();
+                    System.out.println("\tNice! I've marked this task as done:");
+                    System.out.println("\t\t" + Socket.tasks.get(index));
                 }
                 case "unmark" -> {
-                    int index = scanner.nextInt() - 1;
-                    if (index >= Socket.numTasks) {
-                        System.out.println("\tYou only have " + String.valueOf(Socket.numTasks) + " tasks!");
-                    } else {
-                        Socket.tasks[index].unmark();
-                        System.out.println("\tOK, I've marked this task as not done yet:");
-                        System.out.println("\t" + Socket.tasks[index]);
-                    }
+                    int index = getIndex(scanner, "unmark");
+                    Socket.tasks.get(index).unmark();
+                    System.out.println("\tOK, I've marked this task as not done yet:");
+                    System.out.println("\t\t" + Socket.tasks.get(index));
                 }
                 case "todo" -> {
-                    Todo todo = new Todo(scanner.nextLine().strip());
-                    Socket.tasks[Socket.numTasks++] = todo;
-                    // so that Socket.numTasks only gets increment if the Todo is created successfully
+                    Socket.tasks.add(new Todo(scanner.nextLine().strip()));
                     Socket.printAddedTask();
                 }
                 case "deadline" -> {
@@ -71,7 +74,7 @@ public class Socket {
                     if (info.length != 2) {
                         throw new SocketException("Invalid parameters. Usage: deadline <description> /by <deadline>");
                     }
-                    Socket.tasks[Socket.numTasks++] = new Deadline(info[0], info[1]);
+                    Socket.tasks.add(new Deadline(info[0], info[1]));
                     Socket.printAddedTask();
                 }
                 case "event" -> {
@@ -79,12 +82,17 @@ public class Socket {
                     if (info.length != 3) {
                         throw new SocketException("Invalid parameters. Usage: event <description> /from <date> /to <date>");
                     }
-                    Socket.tasks[Socket.numTasks++] = new Event(info[0], info[1], info[2]);
+                    Socket.tasks.add(new Event(info[0], info[1], info[2]));
                     Socket.printAddedTask();
                 }
-                default -> {
-                    System.out.println("\tUnrecognised command");
+                case "delete" -> {
+                    int index = getIndex(scanner, "delete");
+                    Task task = Socket.tasks.remove(index);
+                    System.out.println("\tNoted. I've removed this task:");
+                    System.out.println("\t\t" + task);
+                    System.out.println("\tNow you have " + Socket.tasks.size() + " tasks in the list.");
                 }
+                default -> System.out.println("\tUnrecognised command");
                 }
             } catch (SocketException e) {
                 System.out.println("\t" + e.getMessage());
