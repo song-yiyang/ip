@@ -8,6 +8,12 @@ public class Socket {
     private static int numTasks = 0;
     private static final Task[] tasks = new Task[100];
 
+    private static void printAddedTask() {
+        System.out.println("\tGot it. I've added this task:");
+        System.out.println("\t\t" + Socket.tasks[Socket.numTasks-1]);
+        System.out.println("\tNow you have " + Socket.numTasks + " tasks in the list.");
+    }
+
     public static void main(String[] args) {
         System.out.println('\t' + Socket.HLINE);
         System.out.println('\t' + Socket.LOGO);
@@ -27,6 +33,7 @@ public class Socket {
                 System.exit(0);
             }
             case "list" -> {
+                System.out.println("\tHere are the tasks in your list:");
                 for (int i = 0; i < Socket.numTasks; i++) {
                     System.out.println('\t' + String.valueOf(i + 1) + ". " + Socket.tasks[i]);
                 }
@@ -51,9 +58,19 @@ public class Socket {
                     System.out.println("\t" + Socket.tasks[index]);
                 }
             }
-            case "add" -> {
-                Socket.tasks[Socket.numTasks++] = new Task(scanner.nextLine().strip());
-                System.out.println("\tadded: " + Socket.tasks[Socket.numTasks-1]);
+            case "todo" -> {
+                Socket.tasks[Socket.numTasks++] = new Todo(scanner.nextLine().strip());
+                Socket.printAddedTask();
+            }
+            case "deadline" -> {
+                String[] info = scanner.nextLine().strip().split(" /by ");
+                Socket.tasks[Socket.numTasks++] = new Deadline(info[0], info[1]);
+                Socket.printAddedTask();
+            }
+            case "event" -> {
+                String[] info = scanner.nextLine().strip().split(" /(from|to) ");
+                Socket.tasks[Socket.numTasks++] = new Event(info[0], info[1], info[2]);
+                Socket.printAddedTask();
             }
             default -> {
                 System.out.println("\tUnrecognised command");
