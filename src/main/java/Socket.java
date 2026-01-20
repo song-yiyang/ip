@@ -25,60 +25,73 @@ public class Socket {
             String input = scanner.next();
 
             System.out.println('\t' + Socket.HLINE);
-            switch (input) {
-            case "bye" -> {
-                System.out.println('\t' + Socket.GOODBYE);
+
+            try {
+                switch (input) {
+                case "bye" -> {
+                    System.out.println('\t' + Socket.GOODBYE);
+                    System.out.println('\t' + Socket.HLINE);
+                    System.out.println();
+                    System.exit(0);
+                }
+                case "list" -> {
+                    System.out.println("\tHere are the tasks in your list:");
+                    for (int i = 0; i < Socket.numTasks; i++) {
+                        System.out.println('\t' + String.valueOf(i + 1) + ". " + Socket.tasks[i]);
+                    }
+                }
+                case "mark" -> {
+                    int index = scanner.nextInt() - 1;
+                    if (index >= Socket.numTasks) {
+                        System.out.println("\tYou only have " + String.valueOf(Socket.numTasks) + " tasks!");
+                    } else {
+                        Socket.tasks[index].markAsDone();
+                        System.out.println("\tNice! I've marked this task as done:");
+                        System.out.println("\t" + Socket.tasks[index]);
+                    }
+                }
+                case "unmark" -> {
+                    int index = scanner.nextInt() - 1;
+                    if (index >= Socket.numTasks) {
+                        System.out.println("\tYou only have " + String.valueOf(Socket.numTasks) + " tasks!");
+                    } else {
+                        Socket.tasks[index].unmark();
+                        System.out.println("\tOK, I've marked this task as not done yet:");
+                        System.out.println("\t" + Socket.tasks[index]);
+                    }
+                }
+                case "todo" -> {
+                    Todo todo = new Todo(scanner.nextLine().strip());
+                    Socket.tasks[Socket.numTasks++] = todo;
+                    // so that Socket.numTasks only gets increment if the Todo is created successfully
+                    Socket.printAddedTask();
+                }
+                case "deadline" -> {
+                    String[] info = scanner.nextLine().strip().split(" /by ");
+                    if (info.length != 2) {
+                        throw new SocketException("Invalid parameters. Usage: deadline <description> /by <deadline>");
+                    }
+                    Socket.tasks[Socket.numTasks++] = new Deadline(info[0], info[1]);
+                    Socket.printAddedTask();
+                }
+                case "event" -> {
+                    String[] info = scanner.nextLine().strip().split(" /(from|to) ");
+                    if (info.length != 3) {
+                        throw new SocketException("Invalid parameters. Usage: event <description> /from <date> /to <date>");
+                    }
+                    Socket.tasks[Socket.numTasks++] = new Event(info[0], info[1], info[2]);
+                    Socket.printAddedTask();
+                }
+                default -> {
+                    System.out.println("\tUnrecognised command");
+                }
+                }
+            } catch (SocketException e) {
+                System.out.println("\t" + e.getMessage());
+            } finally {
                 System.out.println('\t' + Socket.HLINE);
                 System.out.println();
-                System.exit(0);
             }
-            case "list" -> {
-                System.out.println("\tHere are the tasks in your list:");
-                for (int i = 0; i < Socket.numTasks; i++) {
-                    System.out.println('\t' + String.valueOf(i + 1) + ". " + Socket.tasks[i]);
-                }
-            }
-            case "mark" -> {
-                int index = scanner.nextInt()-1;
-                if (index >= Socket.numTasks) {
-                    System.out.println("\tYou only have " + String.valueOf(Socket.numTasks) + " tasks!");
-                } else {
-                    Socket.tasks[index].markAsDone();
-                    System.out.println("\tNice! I've marked this task as done:");
-                    System.out.println("\t" + Socket.tasks[index]);
-                }
-            }
-            case "unmark" -> {
-                int index = scanner.nextInt()-1;
-                if (index >= Socket.numTasks) {
-                    System.out.println("\tYou only have " + String.valueOf(Socket.numTasks) + " tasks!");
-                } else {
-                    Socket.tasks[index].unmark();
-                    System.out.println("\tOK, I've marked this task as not done yet:");
-                    System.out.println("\t" + Socket.tasks[index]);
-                }
-            }
-            case "todo" -> {
-                Socket.tasks[Socket.numTasks++] = new Todo(scanner.nextLine().strip());
-                Socket.printAddedTask();
-            }
-            case "deadline" -> {
-                String[] info = scanner.nextLine().strip().split(" /by ");
-                Socket.tasks[Socket.numTasks++] = new Deadline(info[0], info[1]);
-                Socket.printAddedTask();
-            }
-            case "event" -> {
-                String[] info = scanner.nextLine().strip().split(" /(from|to) ");
-                Socket.tasks[Socket.numTasks++] = new Event(info[0], info[1], info[2]);
-                Socket.printAddedTask();
-            }
-            default -> {
-                System.out.println("\tUnrecognised command");
-            }
-            }
-
-            System.out.println('\t' + Socket.HLINE);
-            System.out.println();
         }
     }
 }
