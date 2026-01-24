@@ -1,9 +1,6 @@
 public class Todo extends Task {
     public Todo(String description) throws SocketException {
-        super(description);
-        if (description.isEmpty()) {
-            throw new SocketException("Description of a Todo cannot be empty.");
-        }
+        this(description, false);
     }
 
     public Todo(String description, boolean isDone) throws SocketException {
