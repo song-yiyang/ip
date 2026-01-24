@@ -35,6 +35,7 @@ public class Socket {
                 case DEADLINE -> ui.printAddedTask(Socket.taskList.addDeadline(parsed));
                 case EVENT -> ui.printAddedTask(Socket.taskList.addEvent(parsed));
                 case DELETE -> ui.printDeletedTask(Socket.taskList.deleteTask(parsed));
+                case FIND -> ui.printMatchingTasks(Socket.taskList.printMatchingTasks(parsed[0]));
                 default -> ui.print("This should not happen. hmmm");
                 }
 

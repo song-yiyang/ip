@@ -76,4 +76,14 @@ public class TaskList {
         }
         return out.toArray(new String[0]);
     }
+
+    public String[] printMatchingTasks(String mask) {
+        ArrayList<String> out = new ArrayList<>();
+        for (int i = 0; i < this.tasks.size(); i++) {
+            if (this.tasks.get(i).getDescription().contains(mask)) {
+                out.add('\t' + String.valueOf(i + 1) + ". " + this.tasks.get(i));
+            }
+        }
+        return out.toArray(new String[0]);
+    }
 }

@@ -76,4 +76,13 @@ public class Ui {
         System.out.println("\tNow you have " + tas.size() + " tasks in the list.");
         System.out.println('\t' + Ui.HLINE);
     }
+
+    public void printMatchingTasks(String[] tasks) {
+        System.out.println('\t' + Ui.HLINE);
+        System.out.println("\tHere are the matching tasks in your list:");
+        for (String task : tasks) {
+            System.out.println('\t' + task);
+        }
+        System.out.println('\t' + Ui.HLINE);
+    }
 }
