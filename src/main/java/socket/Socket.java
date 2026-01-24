@@ -40,9 +40,7 @@ public class Socket {
 
                 Socket.storage.saveTasks(Socket.taskList);
                 // For convenience, because the only command that doesn't need to save is list
-            } catch (IllegalArgumentException e) {
-                ui.print("Unrecognised command.");
-            } catch (SocketException e) {
+            } catch (IllegalArgumentException | SocketException e) {
                 ui.print(e.getMessage());
             } catch (DateTimeParseException e) {
                 ui.print("Date format not recognised. Please use yyyy-mm-dd format");
