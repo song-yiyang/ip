@@ -1,17 +1,12 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Socket {
     private static Ui ui;
+    private static Storage storage;
 
-    private static final String SAVE_PATH = "./data/tasklist.txt";
-
-    private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static ArrayList<Task> tasks;
 
     private static int getIndex(Scanner scanner, String msg) throws SocketException {
         try {
@@ -26,48 +21,12 @@ public class Socket {
         }
     }
 
-    private static void loadTasks() {
-        try {
-            Path path = Paths.get(Socket.SAVE_PATH);
-            if (Files.exists(path)) {
-                Files.readAllLines(path).forEach(saveString -> {
-                    String[] comps = saveString.split(" \\| ");
-
-                    try {
-                        switch (saveString.charAt(0)) {
-                            case 'T' -> Socket.tasks.add(new Todo(comps[2], (comps[1].equals("1"))));
-                            case 'D' -> Socket.tasks.add(new Deadline(comps[2], comps[1].equals("1"), comps[3]));
-                            case 'E' -> Socket.tasks.add(new Event(comps[2], comps[1].equals("1"), comps[3], comps[4]));
-                        }
-                    } catch (SocketException e) {
-                        System.out.println("This should not happen: " + e);
-                    }
-                });
-            }
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e);
-        }
-    }
-
-    private static void saveTasks() {
-        try {
-            Path path = Paths.get(Socket.SAVE_PATH);
-            if (!Files.exists(path)) {
-                Files.createDirectories(path.getParent());
-                Files.createFile(path);
-            }
-
-            Files.write(path, Socket.tasks.stream().map(Task::toSaveString).toList());
-        } catch (IOException e) {
-            System.out.println("Something went wrong: " + e);
-        }
-    }
-
     public static void main(String[] args) {
         Socket.ui = new Ui();
+        Socket.storage = new Storage();
 
-        ui.printWelcome();
-        Socket.loadTasks();
+        Socket.ui.printWelcome();
+        Socket.tasks = Socket.storage.loadTasks();
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -98,7 +57,6 @@ public class Socket {
                 case DEADLINE -> {
                     String[] info = scanner.nextLine().strip().split(" /by ");
                     if (info.length != 2) {
-                        System.out.println(info);
                         throw new SocketException("Invalid parameters. Usage: deadline <description> /by <deadline>");
                     }
                     Socket.tasks.add(new Deadline(info[0], info[1]));
@@ -121,7 +79,8 @@ public class Socket {
                 default -> ui.print("This should not happen. hmmm");
                 }
 
-                saveTasks(); // For convenience, because the only command that doesn't need to save is list
+                Socket.storage.saveTasks(Socket.tasks);
+                // For convenience, because the only command that doesn't need to save is list
             } catch (IllegalArgumentException e) {
                 ui.print("Unrecognised command.");
             } catch (SocketException e) {
