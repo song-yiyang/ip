@@ -2,6 +2,9 @@ package socket.task;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a Deadline task.
+ */
 public class Deadline extends Task {
     private final LocalDate by;
 
@@ -9,6 +12,13 @@ public class Deadline extends Task {
         this(description, false, by);
     }
 
+    /**
+     * Initializes a new Deadline task.
+     *
+     * @param description Deadline description or name.
+     * @param isDone Boolean indicated whether it is completed (true) or not.
+     * @param by Deadline due date date-string.
+     */
     public Deadline(String description, boolean isDone, String by) {
         super(description, isDone);
         this.by = Task.parse(by);

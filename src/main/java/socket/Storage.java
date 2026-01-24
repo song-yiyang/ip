@@ -11,9 +11,17 @@ import socket.task.Event;
 import socket.task.Task;
 import socket.task.Todo;
 
+/**
+ * Deals with loading tasks from the file and saving tasks in the file.
+ */
 public class Storage {
     private static final String SAVE_PATH = "./data/tasklist.txt";
 
+    /**
+     * Loads previously stored list of tasks in an ArrayList of Task.
+     *
+     * @return Stored task list.
+     */
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
@@ -40,6 +48,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves current task list into a local, human-readable file at SAVE_PATH.
+     *
+     * @param taskList ArrayList of Task, the current task list.
+     */
     public void saveTasks(TaskList taskList) {
         try {
             Path path = Paths.get(Storage.SAVE_PATH);

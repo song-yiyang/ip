@@ -3,12 +3,21 @@ package socket;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+/**
+ * Is the entry point for the Socket chatbot.
+ * This class houses the main functionality.
+ */
 public class Socket {
     private static Ui ui;
     private static Storage storage;
     private static Parser parser;
     private static TaskList taskList;
 
+    /**
+     * Runs the main logic of the Socket chatbot.
+     *
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
         Socket.ui = new Ui();
         Socket.storage = new Storage();

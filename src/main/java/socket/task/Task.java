@@ -3,6 +3,9 @@ package socket.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an abstract Task, with support for description/name, completed or not, and date formatting.
+ */
 public abstract class Task {
     public static final DateTimeFormatter PATTERN = DateTimeFormatter.ofPattern("MMM d yyyy");
     public static final DateTimeFormatter SAVE_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -10,6 +13,12 @@ public abstract class Task {
     protected final String description;
     protected boolean isDone;
 
+    /**
+     * Initializes a new Task.
+     *
+     * @param description Task description or name.
+     * @param isDone Boolean indicated whether it is completed (true) or not.
+     */
     public Task(String description, boolean isDone) {
         this.description = description;
         this.isDone = isDone;

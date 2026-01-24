@@ -23,7 +23,7 @@ public class TaskListTest {
     public void normalTest() throws SocketException {
         TaskList taskList = new TaskList(this.generate(6));
         for (int i = 1; i <= 6; i++) {
-            assertEquals(i-1, taskList.getIndex(String.valueOf(i), ""));
+            assertEquals(i - 1, taskList.getIndex(String.valueOf(i), ""));
         }
     }
 
