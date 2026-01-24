@@ -24,18 +24,18 @@ public class Socket {
                 String[] parsed = input.parsed();
 
                 switch (command) {
-                    case BYE -> {
-                        ui.printBye();
-                        System.exit(0);
-                    }
-                    case LIST -> ui.printTaskList(Socket.taskList);
-                    case MARK -> ui.printTaskDone(Socket.taskList.markAsDone(parsed));
-                    case UNMARK -> ui.printTaskUndone(Socket.taskList.markAsUndone(parsed));
-                    case TODO -> ui.printAddedTask(Socket.taskList.addTodo(parsed));
-                    case DEADLINE -> ui.printAddedTask(Socket.taskList.addDeadline(parsed));
-                    case EVENT -> ui.printAddedTask(Socket.taskList.addEvent(parsed));
-                    case DELETE -> ui.printDeletedTask(Socket.taskList.deleteTask(parsed));
-                    default -> ui.print("This should not happen. hmmm");
+                case BYE -> {
+                    ui.printBye();
+                    System.exit(0);
+                }
+                case LIST -> ui.printTaskList(Socket.taskList);
+                case MARK -> ui.printTaskDone(Socket.taskList.markAsDone(parsed));
+                case UNMARK -> ui.printTaskUndone(Socket.taskList.markAsUndone(parsed));
+                case TODO -> ui.printAddedTask(Socket.taskList.addTodo(parsed));
+                case DEADLINE -> ui.printAddedTask(Socket.taskList.addDeadline(parsed));
+                case EVENT -> ui.printAddedTask(Socket.taskList.addEvent(parsed));
+                case DELETE -> ui.printDeletedTask(Socket.taskList.deleteTask(parsed));
+                default -> ui.print("This should not happen. hmmm");
                 }
 
                 Socket.storage.saveTasks(Socket.taskList);

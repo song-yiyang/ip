@@ -4,10 +4,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public abstract class Task {
+    public static final DateTimeFormatter PATTERN = DateTimeFormatter.ofPattern("MMM d yyyy");
+    public static final DateTimeFormatter SAVE_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     protected final String description;
     protected boolean isDone;
-    protected static final DateTimeFormatter pattern = DateTimeFormatter.ofPattern("MMM d yyyy");
-    protected static final DateTimeFormatter savePattern = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public Task(String description, boolean isDone) {
         this.description = description;
@@ -27,11 +28,11 @@ public abstract class Task {
     }
 
     protected static String saveDate(LocalDate date) {
-        return date.format(Task.savePattern);
+        return date.format(Task.SAVE_PATTERN);
     }
 
     protected static String displayDate(LocalDate date) {
-        return date.format(Task.pattern);
+        return date.format(Task.PATTERN);
     }
 
     public abstract String toSaveString();

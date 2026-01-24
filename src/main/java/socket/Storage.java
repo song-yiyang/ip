@@ -27,6 +27,7 @@ public class Storage {
                         case 'T' -> tasks.add(new Todo(comps[2], (comps[1].equals("1"))));
                         case 'D' -> tasks.add(new Deadline(comps[2], comps[1].equals("1"), comps[3]));
                         case 'E' -> tasks.add(new Event(comps[2], comps[1].equals("1"), comps[3], comps[4]));
+                        default -> { }
                         }
                     } catch (SocketException e) {
                         System.out.println("This should not happen: " + e);

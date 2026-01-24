@@ -12,7 +12,7 @@ public class Event extends Task {
         this(description, false, from, to);
     }
 
-    public Event(String description, boolean isDone, String from, String to) throws SocketException{
+    public Event(String description, boolean isDone, String from, String to) throws SocketException {
         super(description, isDone);
         this.from = Task.parse(from);
         this.to = Task.parse(to);
@@ -25,7 +25,7 @@ public class Event extends Task {
     @Override
     public String toSaveString() {
         return "E | " + (this.isDone ? "1" : "0") + " | " + this.description + " | "
-                + Task.saveDate(this.from)+ " | " + Task.saveDate(this.to);
+                + Task.saveDate(this.from) + " | " + Task.saveDate(this.to);
     }
 
     @Override
