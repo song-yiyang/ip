@@ -2,12 +2,23 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Socket {
     private static final String HLINE = "____________________________________________________________";
-    private static final String LOGO = "Hello! I'm Socket\n\tWhat can I do for you?";
+    private static final String LOGO = """
+            \tHello! I'm Socket
+            \tWhat can I do for you?
+            \tUsage:
+            \tlist
+            \tmark <task index>
+            \tunmark <task index>
+            \ttodo <name>
+            \tdeadline <name> /by <date in yyyy-mm-dd>
+            \tevent <name> /from <date in yyyy-mm-dd> /to <date in yyyy-mm-dd>
+            \tbye""";
     private static final String GOODBYE = "Bye. Hope to see you again soon!";
 
     private static final String SAVE_PATH = "./data/tasklist.txt";
@@ -39,16 +50,15 @@ public class Socket {
             if (Files.exists(path)) {
                 Files.readAllLines(path).forEach(saveString -> {
                     String[] comps = saveString.split(" \\| ");
-                    switch (saveString.charAt(0)) {
-                        case 'T' -> {
-                            try {
-                                Socket.tasks.add(new Todo(comps[2], (comps[1].equals("1"))));
-                            } catch (SocketException e) {
-                                System.out.println("This should not happen: " + e);
-                            }
+
+                    try {
+                        switch (saveString.charAt(0)) {
+                            case 'T' -> Socket.tasks.add(new Todo(comps[2], (comps[1].equals("1"))));
+                            case 'D' -> Socket.tasks.add(new Deadline(comps[2], comps[1].equals("1"), comps[3]));
+                            case 'E' -> Socket.tasks.add(new Event(comps[2], comps[1].equals("1"), comps[3], comps[4]));
                         }
-                        case 'D' -> Socket.tasks.add(new Deadline(comps[2], comps[1].equals("1"), comps[3]));
-                        case 'E' -> Socket.tasks.add(new Event(comps[2], comps[1].equals("1"), comps[3], comps[4]));
+                    } catch (SocketException e) {
+                        System.out.println("This should not happen: " + e);
                     }
                 });
             }
@@ -73,7 +83,7 @@ public class Socket {
 
     public static void main(String[] args) {
         System.out.println('\t' + Socket.HLINE);
-        System.out.println('\t' + Socket.LOGO);
+        System.out.println(Socket.LOGO);
         System.out.println('\t' + Socket.HLINE);
         System.out.println();
 
@@ -127,7 +137,8 @@ public class Socket {
                 case EVENT -> {
                     String[] info = scanner.nextLine().strip().split(" /(from|to) ");
                     if (info.length != 3) {
-                        throw new SocketException("Invalid parameters. Usage: event <description> /from <date> /to <date>");
+                        throw new SocketException("Invalid parameters. Usage: event <description>" +
+                                " /from <date> /to <date>");
                     }
                     Socket.tasks.add(new Event(info[0], info[1], info[2]));
                     Socket.printAddedTask();
@@ -147,6 +158,8 @@ public class Socket {
                 System.out.println("\tUnrecognised command.");
             } catch (SocketException e) {
                 System.out.println("\t" + e.getMessage());
+            } catch (DateTimeParseException e) {
+                System.out.println("\t Date format not recognised. Please use yyyy-mm-dd format");
             } finally {
                 System.out.println('\t' + Socket.HLINE);
                 System.out.println();
