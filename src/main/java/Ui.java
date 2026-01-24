@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Ui {
     private static final String HLINE = "____________________________________________________________";
     private static final String LOGO = """
@@ -36,11 +34,11 @@ public class Ui {
         System.out.println('\t' + Ui.HLINE);
     }
 
-    public void printTaskList(ArrayList<Task> tasks) {
+    public void printTaskList(TaskList taskList) {
         System.out.println('\t' + Ui.HLINE);
         System.out.println("\tHere are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println('\t' + String.valueOf(i + 1) + ". " + tasks.get(i));
+        for (String task : taskList.printTasks()) {
+            System.out.println('\t' + task);
         }
         System.out.println('\t' + Ui.HLINE);
     }
@@ -59,19 +57,19 @@ public class Ui {
         System.out.println('\t' + Ui.HLINE);
     }
 
-    public void printAddedTask(Task task, int numTasks) {
+    public void printAddedTask(TaskAndSize tas) {
         System.out.println('\t' + Ui.HLINE);
         System.out.println("\tGot it. I've added this task:");
-        System.out.println("\t\t" + task);
-        System.out.println("\tNow you have " + numTasks + " tasks in the list.");
+        System.out.println("\t\t" + tas.task());
+        System.out.println("\tNow you have " + tas.size() + " tasks in the list.");
         System.out.println('\t' + Ui.HLINE);
     }
 
-    public void printDeletedTask(Task task, int numTasks) {
+    public void printDeletedTask(TaskAndSize tas) {
         System.out.println('\t' + Ui.HLINE);
         System.out.println("\tNoted. I've removed this task:");
-        System.out.println("\t\t" + task);
-        System.out.println("\tNow you have " + numTasks + " tasks in the list.");
+        System.out.println("\t\t" + tas.task());
+        System.out.println("\tNow you have " + tas.size() + " tasks in the list.");
         System.out.println('\t' + Ui.HLINE);
     }
 }

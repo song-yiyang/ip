@@ -32,7 +32,7 @@ public class Storage {
         return tasks;
     }
 
-    public void saveTasks(ArrayList<Task> tasks) {
+    public void saveTasks(TaskList taskList) {
         try {
             Path path = Paths.get(Storage.SAVE_PATH);
             if (!Files.exists(path)) {
@@ -40,7 +40,7 @@ public class Storage {
                 Files.createFile(path);
             }
 
-            Files.write(path, tasks.stream().map(Task::toSaveString).toList());
+            Files.write(path, taskList.getTaskList().stream().map(Task::toSaveString).toList());
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e);
         }

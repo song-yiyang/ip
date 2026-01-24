@@ -1,0 +1,1 @@
+public record TaskAndSize(Task task, int size) {}
