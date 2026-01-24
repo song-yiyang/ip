@@ -1,3 +1,7 @@
+package socket.task;
+
+import socket.SocketException;
+
 public class Todo extends Task {
     public Todo(String description) throws SocketException {
         this(description, false);

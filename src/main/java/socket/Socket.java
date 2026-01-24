@@ -1,3 +1,5 @@
+package socket;
+
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 

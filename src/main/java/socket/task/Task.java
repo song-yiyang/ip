@@ -1,3 +1,5 @@
+package socket.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -6,10 +8,6 @@ public abstract class Task {
     protected boolean isDone;
     protected static final DateTimeFormatter pattern = DateTimeFormatter.ofPattern("MMM d yyyy");
     protected static final DateTimeFormatter savePattern = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    public Task(String description) {
-        this(description, false);
-    }
 
     public Task(String description, boolean isDone) {
         this.description = description;

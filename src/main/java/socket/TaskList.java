@@ -1,4 +1,11 @@
+package socket;
+
 import java.util.ArrayList;
+
+import socket.task.Deadline;
+import socket.task.Event;
+import socket.task.Task;
+import socket.task.Todo;
 
 public class TaskList {
     private final ArrayList<Task> tasks;

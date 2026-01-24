@@ -1,3 +1,7 @@
+package socket;
+
+import socket.task.Task;
+
 public class Ui {
     private static final String HLINE = "____________________________________________________________";
     private static final String LOGO = """

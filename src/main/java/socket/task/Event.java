@@ -1,4 +1,8 @@
+package socket.task;
+
 import java.time.LocalDate;
+
+import socket.SocketException;
 
 public class Event extends Task {
     private final LocalDate from;
