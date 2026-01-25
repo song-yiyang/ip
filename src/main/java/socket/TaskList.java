@@ -140,6 +140,12 @@ public class TaskList {
         return out.toArray(new String[0]);
     }
 
+    /**
+     * Retrieves a list of strings of all tasks containing a specific substring.
+     *
+     * @param mask Substring to match
+     * @return Printable string array of all matching tasks
+     */
     public String[] printMatchingTasks(String mask) {
         ArrayList<String> out = new ArrayList<>();
         for (int i = 0; i < this.tasks.size(); i++) {

@@ -116,12 +116,17 @@ public class Ui {
         System.out.println('\t' + Ui.H_LINE);
     }
 
+    /**
+     * Prints a list of tasks that were a result of a matching-substring search.
+     * 
+     * @param tasks String array of printable tasks.
+     */
     public void printMatchingTasks(String[] tasks) {
-        System.out.println('\t' + Ui.HLINE);
+        System.out.println('\t' + Ui.H_LINE);
         System.out.println("\tHere are the matching tasks in your list:");
         for (String task : tasks) {
             System.out.println('\t' + task);
         }
-        System.out.println('\t' + Ui.HLINE);
+        System.out.println('\t' + Ui.H_LINE);
     }
 }
