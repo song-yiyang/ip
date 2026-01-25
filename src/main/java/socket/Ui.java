@@ -53,14 +53,14 @@ public class Ui {
     }
 
     /**
-     * Prints the full descriptive list of tasks in a TaskList object.
+     * Prints the full descriptive list of tasks given in an array of strings.
      *
-     * @param taskList TaskList object whose tasks are to be listed.
+     * @param tasks String array of printable tasks.
      */
-    public void printTaskList(TaskList taskList) {
+    public void printTaskList(String[] tasks) {
         System.out.println('\t' + Ui.H_LINE);
         System.out.println("\tHere are the tasks in your list:");
-        for (String task : taskList.printTasks()) {
+        for (String task : tasks) {
             System.out.println('\t' + task);
         }
         System.out.println('\t' + Ui.H_LINE);
@@ -118,7 +118,7 @@ public class Ui {
 
     /**
      * Prints a list of tasks that were a result of a matching-substring search.
-     * 
+     *
      * @param tasks String array of printable tasks.
      */
     public void printMatchingTasks(String[] tasks) {

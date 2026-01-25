@@ -37,13 +37,13 @@ public class Socket {
                     ui.printBye();
                     System.exit(0);
                 }
-                case LIST -> ui.printTaskList(Socket.taskList);
-                case MARK -> ui.printTaskDone(Socket.taskList.markAsDone(parsed));
-                case UNMARK -> ui.printTaskUndone(Socket.taskList.markAsUndone(parsed));
+                case LIST -> ui.printTaskList(Socket.taskList.printTasks());
+                case MARK -> ui.printTaskDone(Socket.taskList.markAsDone(parsed[0]));
+                case UNMARK -> ui.printTaskUndone(Socket.taskList.markAsUndone(parsed[0]));
                 case TODO -> ui.printAddedTask(Socket.taskList.addTodo(parsed));
                 case DEADLINE -> ui.printAddedTask(Socket.taskList.addDeadline(parsed));
                 case EVENT -> ui.printAddedTask(Socket.taskList.addEvent(parsed));
-                case DELETE -> ui.printDeletedTask(Socket.taskList.deleteTask(parsed));
+                case DELETE -> ui.printDeletedTask(Socket.taskList.deleteTask(parsed[0]));
                 case FIND -> ui.printMatchingTasks(Socket.taskList.printMatchingTasks(parsed[0]));
                 default -> ui.print("This should not happen. hmmm");
                 }

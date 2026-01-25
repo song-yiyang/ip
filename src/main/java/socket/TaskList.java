@@ -52,12 +52,12 @@ public class TaskList {
     /**
      * Marks a specific task as complete.
      *
-     * @param parsed Array whose first element is the index of the task.
+     * @param indexString String of the index of the task.
      * @return The specific task.
      * @throws SocketException If any exceptions from getIndex are thrown, passing the buck up.
      */
-    public Task markAsDone(String[] parsed) throws SocketException {
-        int index = this.getIndex(parsed[0], "mark");
+    public Task markAsDone(String indexString) throws SocketException {
+        int index = this.getIndex(indexString, "mark");
         this.tasks.get(index).markAsDone();
         return this.tasks.get(index);
     }
@@ -65,12 +65,12 @@ public class TaskList {
     /**
      * Marks a specific task as incomplete.
      *
-     * @param parsed Array whose first element is the index of the task.
+     * @param indexString String of the index of the task.
      * @return The specific task.
      * @throws SocketException If any exceptions from getIndex are thrown, passing the buck up.
      */
-    public Task markAsUndone(String[] parsed) throws SocketException {
-        int index = getIndex(parsed[0], "unmark");
+    public Task markAsUndone(String indexString) throws SocketException {
+        int index = getIndex(indexString, "unmark");
         this.tasks.get(index).unmark();
         return this.tasks.get(index);
     }
@@ -78,7 +78,7 @@ public class TaskList {
     /**
      * Adds a new Todo task.
      *
-     * @param parsed Array whose first element is the description of the Todo.
+     * @param parsed Array of {description of the Todo}.
      * @return TaskAndSize record of the Todo task and the new total number of tasks.
      * @throws SocketException If any exceptions are thrown from creating the Todo, passing the buck up.
      */
@@ -117,12 +117,12 @@ public class TaskList {
     /**
      * Deletes a task from the task list.
      *
-     * @param parsed Array whose first element is the index of the task.
+     * @param indexString String of the index of the task.
      * @return TaskAndSize record of the task and the new total number of tasks.
      * @throws SocketException If any exceptions are thrown from getIndex, passing the buck up.
      */
-    public TaskAndSize deleteTask(String[] parsed) throws SocketException {
-        int index = this.getIndex(parsed[0], "delete");
+    public TaskAndSize deleteTask(String indexString) throws SocketException {
+        int index = this.getIndex(indexString, "delete");
         Task task = this.tasks.remove(index);
         return new TaskAndSize(task, this.tasks.size());
     }
