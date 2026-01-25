@@ -30,32 +30,32 @@ public class TaskListTest {
     @Test
     public void outOfBoundTest() throws SocketException {
         TaskList taskList = new TaskList(this.generate(6));
-        String e_msg = "Task index needs to be at least 1.";
+        String msg = "Task index needs to be at least 1.";
         for (int i = -2; i <= 0; i++) {
             int finalI = i;
             SocketException e = assertThrows(SocketException.class, () ->
                     taskList.getIndex(String.valueOf(finalI), ""));
-            assertEquals(e_msg, e.getMessage());
+            assertEquals(msg, e.getMessage());
         }
 
-        e_msg = "You only have 6 tasks!";
+        msg = "You only have 6 tasks!";
         for (int i = 7; i <= 9; i++) {
             int finalI = i;
             SocketException e = assertThrows(SocketException.class, () ->
                     taskList.getIndex(String.valueOf(finalI), ""));
-            assertEquals(e_msg, e.getMessage());
+            assertEquals(msg, e.getMessage());
         }
     }
 
     @Test
     public void nanTest() throws SocketException {
         TaskList taskList = new TaskList(this.generate(6));
-        String e_msg = "Invalid parameters. Usage: msg <index>";
+        String msg = "Invalid parameters. Usage: msg <index>";
         SocketException e = assertThrows(SocketException.class, () ->
                 taskList.getIndex("jashfkj", "msg"));
-        assertEquals(e_msg, e.getMessage());
+        assertEquals(msg, e.getMessage());
 
         e = assertThrows(SocketException.class, () -> taskList.getIndex("1hi", "msg"));
-        assertEquals(e_msg, e.getMessage());
+        assertEquals(msg, e.getMessage());
     }
 }
