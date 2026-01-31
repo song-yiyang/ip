@@ -13,8 +13,11 @@ public class Socket {
     private final Parser parser;
     private final TaskList taskList;
 
-    public Command commandType = Command.LIST;
+    private Command commandType = Command.LIST;
 
+    /**
+     * Simple initializer that initializes all variables: ui, storage, parser and taskList.
+     */
     public Socket() {
         ui = new Ui();
         storage = new Storage();
@@ -67,6 +70,11 @@ public class Socket {
         return output;
     }
 
+    /**
+     * Simple getter for commandType.
+     *
+     * @return commandType of the last command.
+     */
     public Command getCommandType() {
         return commandType;
     }
