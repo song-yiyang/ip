@@ -6,127 +6,85 @@ import socket.task.Task;
  * Deals with interactions with the user.
  */
 public class Ui {
-    private static final String H_LINE = "____________________________________________________________";
     private static final String LOGO = """
-            \tHello! I'm Socket
-            \tWhat can I do for you?
-            \tUsage:
-            \tlist
-            \tmark <task index>
-            \tunmark <task index>
-            \tdelete <task index>
-            \ttodo <name>
-            \tdeadline <name> /by <date in yyyy-mm-dd>
-            \tevent <name> /from <date in yyyy-mm-dd> /to <date in yyyy-mm-dd>
-            \tbye""";
-    private static final String GOODBYE = "Bye. Hope to see you again soon!";
+            Hello! I'm Socket
+            What can I do for you?
+            Usage:
+            list
+            mark <task index>
+            unmark <task index>
+            delete <task index>
+            todo <name>
+            deadline <name> /by <date in yyyy-mm-dd>
+            event <name> /from <date in yyyy-mm-dd> /to <date in yyyy-mm-dd>
+            bye""";
 
     /**
      * Prints the welcome screen upon startup.
-     */
-    public void printWelcome() {
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println(Ui.LOGO);
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println();
-    }
-
-    /**
-     * Prints the goodbye message before exiting the chatbot.
-     */
-    public void printBye() {
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println('\t' + Ui.GOODBYE);
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println();
-    }
-
-    /**
-     * Prints any one-line string enclosed in the default style of 2 lines.
      *
-     * @param str String to be printed.
+     * @return Welcome string.
      */
-    public void print(String str) {
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println('\t' + str);
-        System.out.println('\t' + Ui.H_LINE);
+    public String printWelcome() {
+        return Ui.LOGO;
     }
 
     /**
      * Prints the full descriptive list of tasks given in an array of strings.
      *
      * @param tasks String array of printable tasks.
+     * @return String of list of tasks.
      */
-    public void printTaskList(String[] tasks) {
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println("\tHere are the tasks in your list:");
-        for (String task : tasks) {
-            System.out.println('\t' + task);
-        }
-        System.out.println('\t' + Ui.H_LINE);
+    public String printTaskList(String[] tasks) {
+        return "Here are the tasks in your list:\n\t" + String.join("\n\t", tasks);
     }
 
     /**
      * Prints a message informing a specific task has been marked as completed.
      *
      * @param task Task that was marked as completed.
+     * @return Message of task marked.
      */
-    public void printTaskDone(Task task) {
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println("\tNice! I've marked this task as done:");
-        System.out.println("\t\t" + task);
-        System.out.println('\t' + Ui.H_LINE);
+    public String printTaskDone(Task task) {
+        return "Nice! I've marked this task as done:\n\t" + task.toString();
     }
 
     /**
      * Prints a message informing a specific task has been marked as incomplete.
      *
      * @param task Task that was marked as incomplete.
+     * @return Message of task unmarked.
      */
-    public void printTaskUndone(Task task) {
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println("\tOK, I've marked this task as not done yet:");
-        System.out.println("\t\t" + task);
-        System.out.println('\t' + Ui.H_LINE);
+    public String printTaskUndone(Task task) {
+        return "OK, I've marked this task as not done yet:\n\t" + task.toString();
     }
 
     /**
      * Prints a message informing a specific task has been added and the current number of tasks.
      *
      * @param tas TaskAndSize record, containing added task and new total number of tasks.
+     * @return Message of task added.
      */
-    public void printAddedTask(TaskAndSize tas) {
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println("\tGot it. I've added this task:");
-        System.out.println("\t\t" + tas.task());
-        System.out.println("\tNow you have " + tas.size() + " tasks in the list.");
-        System.out.println('\t' + Ui.H_LINE);
+    public String printAddedTask(TaskAndSize tas) {
+        return "OK. I've added this task:\n\t" + tas.task() + "\nNow you have " + tas.size() + " tasks in the list.";
     }
 
     /**
      * Prints a message informing a specific task has been deleted and the current number of tasks.
      *
      * @param tas TaskAndSize record, containing deleted task and new total number of tasks.
+     * @return Message of task deleted.
      */
-    public void printDeletedTask(TaskAndSize tas) {
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println("\tNoted. I've removed this task:");
-        System.out.println("\t\t" + tas.task());
-        System.out.println("\tNow you have " + tas.size() + " tasks in the list.");
-        System.out.println('\t' + Ui.H_LINE);
+    public String printDeletedTask(TaskAndSize tas) {
+        return "OK. I've removed this task:\n\t" + tas.task() + "\nNow you have " + tas.size() + " tasks in the list.";
     }
 
     /**
      * Prints a list of tasks that were a result of a matching-substring search.
      *
      * @param tasks String array of printable tasks.
+     * @return String of list of matching tasks.
      */
-    public void printMatchingTasks(String[] tasks) {
-        System.out.println('\t' + Ui.H_LINE);
-        System.out.println("\tHere are the matching tasks in your list:");
-        for (String task : tasks) {
-            System.out.println('\t' + task);
-        }
-        System.out.println('\t' + Ui.H_LINE);
+    public String printMatchingTasks(String[] tasks) {
+        return "Here are the matching tasks in your list:\n\t" + String.join("\n\t", tasks);
     }
 }

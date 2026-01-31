@@ -8,55 +8,66 @@ import java.util.Scanner;
  * This class houses the main functionality.
  */
 public class Socket {
-    private static Ui ui;
-    private static Storage storage;
-    private static Parser parser;
-    private static TaskList taskList;
+    private final Ui ui;
+    private final Storage storage;
+    private final Parser parser;
+    private final TaskList taskList;
+
+    public Command commandType = Command.LIST;
+
+    public Socket() {
+        ui = new Ui();
+        storage = new Storage();
+        parser = new Parser();
+        taskList = new TaskList(storage.loadTasks());
+    }
 
     /**
-     * Runs the main logic of the Socket chatbot.
+     * Prints the welcome statement.
      *
-     * @param args Command line arguments.
+     * @return Welcome-string of Socket chatbot.
      */
-    public static void main(String[] args) {
-        Socket.ui = new Ui();
-        Socket.storage = new Storage();
-        Socket.parser = new Parser(new Scanner(System.in));
-        Socket.taskList = new TaskList(Socket.storage.loadTasks());
+    public String getWelcome() {
+        return ui.printWelcome();
+    }
 
-        Socket.ui.printWelcome();
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String inputString) {
+        String output;
+        try {
+            Input input = parser.parseInput(new Scanner(inputString));
+            commandType = input.command();
+            String[] parsed = input.parsed();
 
-        while (true) {
-            try {
-                Input input = Socket.parser.parseInput();
-                Command command = input.command();
-                String[] parsed = input.parsed();
-
-                switch (command) {
-                case BYE -> {
-                    ui.printBye();
-                    System.exit(0);
-                }
-                case LIST -> ui.printTaskList(Socket.taskList.printTasks());
-                case MARK -> ui.printTaskDone(Socket.taskList.markAsDone(parsed[0]));
-                case UNMARK -> ui.printTaskUndone(Socket.taskList.markAsUndone(parsed[0]));
-                case TODO -> ui.printAddedTask(Socket.taskList.addTodo(parsed));
-                case DEADLINE -> ui.printAddedTask(Socket.taskList.addDeadline(parsed));
-                case EVENT -> ui.printAddedTask(Socket.taskList.addEvent(parsed));
-                case DELETE -> ui.printDeletedTask(Socket.taskList.deleteTask(parsed[0]));
-                case FIND -> ui.printMatchingTasks(Socket.taskList.printMatchingTasks(parsed[0]));
-                default -> ui.print("This should not happen. hmmm");
-                }
-
-                Socket.storage.saveTasks(Socket.taskList);
-                // For convenience, because the only command that doesn't need to save is list
-            } catch (IllegalArgumentException | SocketException e) {
-                ui.print(e.getMessage());
-            } catch (DateTimeParseException e) {
-                ui.print("Date format not recognised. Please use yyyy-mm-dd format");
-            } finally {
-                System.out.println();
+            if (commandType == Command.BYE) {
+                System.exit(0);
             }
+
+            output = switch (commandType) {
+            case LIST -> ui.printTaskList(taskList.printTasks());
+            case MARK -> ui.printTaskDone(taskList.markAsDone(parsed[0]));
+            case UNMARK -> ui.printTaskUndone(taskList.markAsUndone(parsed[0]));
+            case TODO -> ui.printAddedTask(taskList.addTodo(parsed));
+            case DEADLINE -> ui.printAddedTask(taskList.addDeadline(parsed));
+            case EVENT -> ui.printAddedTask(taskList.addEvent(parsed));
+            case DELETE -> ui.printDeletedTask(taskList.deleteTask(parsed[0]));
+            case FIND -> ui.printMatchingTasks(taskList.printMatchingTasks(parsed[0]));
+            default -> "This should not happen. hmmm";
+            };
+
+            storage.saveTasks(taskList);
+            // For convenience, because the only command that doesn't need to save is list
+        } catch (IllegalArgumentException | SocketException e) {
+            output = e.getMessage();
+        } catch (DateTimeParseException e) {
+            output = "Date format not recognised. Please use yyyy-mm-dd format";
         }
+        return output;
+    }
+
+    public Command getCommandType() {
+        return commandType;
     }
 }
