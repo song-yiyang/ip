@@ -31,10 +31,10 @@ public class Ui {
     /**
      * Prints the full descriptive list of tasks given in an array of strings.
      *
-     * @param tasks String array of printable tasks.
+     * @param tasks A variable number of strings of printable tasks.
      * @return String of list of tasks.
      */
-    public String printTaskList(String[] tasks) {
+    public String printTaskList(String ... tasks) {
         return "Here are the tasks in your list:\n\t" + String.join("\n\t", tasks);
     }
 
@@ -81,10 +81,10 @@ public class Ui {
     /**
      * Prints a list of tasks that were a result of a matching-substring search.
      *
-     * @param tasks String array of printable tasks.
+     * @param tasks A variable number of strings of matching printable tasks.
      * @return String of list of matching tasks.
      */
-    public String printMatchingTasks(String[] tasks) {
+    public String printMatchingTasks(String ... tasks) {
         return "Here are the matching tasks in your list:\n\t" + String.join("\n\t", tasks);
     }
 }
