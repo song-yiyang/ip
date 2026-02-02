@@ -81,7 +81,7 @@ public class Ui {
     /**
      * Prints a list of tasks that were a result of a matching-substring search.
      *
-     * @param tasks A variable number of strings of matching printable tasks.
+     * @param tasks A variable number of strings of printable tasks matching search keyword.
      * @return String of list of matching tasks.
      */
     public String printMatchingTasks(String ... tasks) {
