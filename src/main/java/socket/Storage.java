@@ -24,27 +24,30 @@ public class Storage {
      */
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
-        try {
-            Path path = Paths.get(Storage.SAVE_PATH);
-            if (Files.exists(path)) {
-                Files.readAllLines(path).forEach(saveString -> {
-                    String[] comps = saveString.split(" \\| ");
+        Path path = Paths.get(Storage.SAVE_PATH);
+        if (!Files.exists(path)) {
+            return tasks;
+        }
 
-                    try {
-                        switch (saveString.charAt(0)) {
-                        case 'T' -> tasks.add(new Todo(comps[2], (comps[1].equals("1"))));
-                        case 'D' -> tasks.add(new Deadline(comps[2], comps[1].equals("1"), comps[3]));
-                        case 'E' -> tasks.add(new Event(comps[2], comps[1].equals("1"), comps[3], comps[4]));
-                        default -> { }
-                        }
-                    } catch (SocketException e) {
-                        System.out.println("This should not happen: " + e);
+        try {
+            Files.readAllLines(path).forEach(saveString -> {
+                String[] comps = saveString.split(" \\| ");
+
+                try {
+                    switch (saveString.charAt(0)) {
+                    case 'T' -> tasks.add(new Todo(comps[2], (comps[1].equals("1"))));
+                    case 'D' -> tasks.add(new Deadline(comps[2], comps[1].equals("1"), comps[3]));
+                    case 'E' -> tasks.add(new Event(comps[2], comps[1].equals("1"), comps[3], comps[4]));
+                    default -> { }
                     }
-                });
-            }
+                } catch (SocketException e) {
+                    System.out.println("This should not happen: " + e);
+                }
+            });
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e);
         }
+
         return tasks;
     }
 
