@@ -66,6 +66,7 @@ public class Storage {
 
             assert Files.exists(path) : "No savefile found at path: " + Storage.SAVE_PATH;
 
+            // Write tasks to savefile, one file per line, according to their save-string format
             Files.write(path, taskList.getTaskList().stream().map(Task::toSaveString).toList());
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e);
