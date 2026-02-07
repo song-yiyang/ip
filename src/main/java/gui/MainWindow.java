@@ -49,16 +49,12 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText().strip();
-        System.out.println("User input is: '" + input + "'");
         if (input.isEmpty()) {
             return;
         }
 
         String response = socket.getResponse(input);
         Command commandType = socket.getCommandType();
-
-        System.out.println("response: " + response);
-        System.out.println("commandType: " + commandType);
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
