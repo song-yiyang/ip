@@ -61,6 +61,8 @@ public class Storage {
                 Files.createFile(path);
             }
 
+            assert Files.exists(path): "No savefile found at path: " + Storage.SAVE_PATH;
+
             Files.write(path, taskList.getTaskList().stream().map(Task::toSaveString).toList());
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e);
