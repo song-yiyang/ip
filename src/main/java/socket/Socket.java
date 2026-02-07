@@ -31,7 +31,7 @@ public class Socket {
      * @return Welcome-string of Socket chatbot.
      */
     public String getWelcome() {
-        return ui.printWelcome();
+        return ui.printInfo();
     }
 
     /**
@@ -49,6 +49,7 @@ public class Socket {
             }
 
             output = switch (commandType) {
+            case HELP -> ui.printInfo();
             case LIST -> ui.printTaskList(taskList.printTasks());
             case MARK -> ui.printTaskDone(taskList.markAsDone(parsed[0]));
             case UNMARK -> ui.printTaskUndone(taskList.markAsUndone(parsed[0]));

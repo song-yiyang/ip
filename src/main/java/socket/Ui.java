@@ -6,10 +6,11 @@ import socket.task.Task;
  * Deals with interactions with the user.
  */
 public class Ui {
-    private static final String LOGO = """
+    private static final String INFO = """
             Hello! I'm Socket
             What can I do for you?
-            Usage:
+            List of commands:
+            help
             list
             mark <task index>
             unmark <task index>
@@ -20,12 +21,12 @@ public class Ui {
             bye""";
 
     /**
-     * Prints the welcome screen upon startup.
+     * Prints an informative message with welcome and help elements.
      *
-     * @return Welcome string.
+     * @return Info string.
      */
-    public String printWelcome() {
-        return Ui.LOGO;
+    public String printInfo() {
+        return Ui.INFO;
     }
 
     /**
