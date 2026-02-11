@@ -22,6 +22,8 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+
+            stage.setTitle("Socket");
             stage.setScene(scene);
             fxmlLoader.<gui.MainWindow>getController().setSocket(socket); // inject the Socket instance
             stage.show();

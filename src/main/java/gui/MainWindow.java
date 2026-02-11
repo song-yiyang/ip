@@ -26,7 +26,7 @@ public class MainWindow extends AnchorPane {
     private Socket socket;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image socketImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image socketImage = new Image(this.getClass().getResourceAsStream("/images/DaSocket.png"));
 
     @FXML
     public void initialize() {
@@ -38,7 +38,7 @@ public class MainWindow extends AnchorPane {
         socket = s;
         String response = socket.getWelcome();
         dialogContainer.getChildren().addAll(
-                DialogBox.getDukeDialog(response, socketImage)
+                DialogBox.getSocketDialog(response, socketImage)
         );
     }
 
@@ -58,7 +58,7 @@ public class MainWindow extends AnchorPane {
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, socketImage, commandType)
+                DialogBox.getSocketDialog(response, socketImage, commandType)
         );
         userInput.clear();
     }

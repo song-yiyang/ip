@@ -63,14 +63,14 @@ public class DialogBox extends HBox {
         }
     }
 
-    public static DialogBox getDukeDialog(String text, Image img, Command commandType) {
+    public static DialogBox getSocketDialog(String text, Image img, Command commandType) {
         var db = new DialogBox(text, img);
         db.flip();
         db.changeDialogStyle(commandType);
         return db;
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
-        return DialogBox.getDukeDialog(text, img, Command.LIST);
+    public static DialogBox getSocketDialog(String text, Image img) {
+        return DialogBox.getSocketDialog(text, img, Command.LIST);
     }
 }
