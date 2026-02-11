@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -25,12 +26,13 @@ public class MainWindow extends AnchorPane {
 
     private Socket socket;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image socketImage = new Image(this.getClass().getResourceAsStream("/images/DaSocket.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
+    private Image socketImage = new Image(this.getClass().getResourceAsStream("/images/Socket.png"));
+    // Image credits: NUS Students' Computing Club, retrieved: https://www.facebook.com/photo.php?fbid=952757871459097
 
     @FXML
     public void initialize() {
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        // scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
     /** Injects the Socket instance */
@@ -61,5 +63,12 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getSocketDialog(response, socketImage, commandType)
         );
         userInput.clear();
+
+        //@@author song-yiyang-reused
+        // Reused from https://github.com/NUS-CS2103-AY2526-S2/forum/issues/157
+
+        // autoscroll downwards after the new message bubbles have been added
+        Platform.runLater(() -> scrollPane.setVvalue(1.0));
+        //@@author
     }
 }
