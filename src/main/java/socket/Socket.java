@@ -39,8 +39,6 @@ public class Socket {
      */
     public String getResponse(String inputString) {
         String output;
-        commandType = Command.UNKNOWN;
-
         try {
             Input input = parser.parseInput(new Scanner(inputString));
             commandType = input.command();
@@ -67,8 +65,10 @@ public class Socket {
             // For convenience, because the only command that doesn't need to save is list
         } catch (IllegalArgumentException | SocketException e) {
             output = e.getMessage();
+            commandType = Command.UNKNOWN;
         } catch (DateTimeParseException e) {
             output = "Date format not recognised. Please use yyyy-mm-dd format";
+            commandType = Command.UNKNOWN;
         }
         return output;
     }
