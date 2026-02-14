@@ -1,5 +1,6 @@
 package socket;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -41,7 +42,13 @@ public class Parser {
             String[] parsed = new String[3];
 
             switch (command) {
-            case MARK, UNMARK, DELETE, TODO, FIND -> parsed[0] = scanner.nextLine().strip();
+            case MARK, UNMARK, DELETE, TODO, FIND -> {
+                try {
+                    parsed[0] = scanner.nextLine().strip();
+                } catch (NoSuchElementException e) {
+                    throw new SocketException("Incomplete arguments. Please provide text or index.");
+                }
+            }
             case DEADLINE -> {
                 parsed = scanner.nextLine().strip().split(" /by ");
                 if (parsed.length != 2) {
