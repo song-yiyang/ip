@@ -11,15 +11,15 @@
     -fx-border-radius: 1em 1em 1em 0;
 }
 
-.add-label {
+.yellow-label {
     -fx-background-color: yellow;
 }
 
-.marked-label {
+.green-label {
     -fx-background-color: palegreen;
 }
 
-.delete-label {
+.red-label {
     -fx-background-color: lightpink;
 }
 

@@ -56,9 +56,9 @@ public class DialogBox extends HBox {
 
     private void changeDialogStyle(Command commandType) {
         switch(commandType) {
-        case TODO, DEADLINE, EVENT -> dialog.getStyleClass().add("add-label");
-        case MARK -> dialog.getStyleClass().add("marked-label");
-        case DELETE -> dialog.getStyleClass().add("delete-label");
+        case TODO, DEADLINE, EVENT, DELETE -> dialog.getStyleClass().add("green-label");
+        case MARK, UNMARK -> dialog.getStyleClass().add("yellow-label");
+        case UNKNOWN -> dialog.getStyleClass().add("red-label");
         default -> { }
         }
     }

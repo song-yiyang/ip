@@ -13,7 +13,7 @@ public class Socket {
     private final Parser parser;
     private final TaskList taskList;
 
-    private Command commandType = Command.LIST;
+    private Command commandType = Command.UNKNOWN;
 
     /**
      * Simple initializer that initializes all variables: ui, storage, parser and taskList.
@@ -39,6 +39,8 @@ public class Socket {
      */
     public String getResponse(String inputString) {
         String output;
+        commandType = Command.UNKNOWN;
+
         try {
             Input input = parser.parseInput(new Scanner(inputString));
             commandType = input.command();
