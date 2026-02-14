@@ -30,11 +30,6 @@ public class MainWindow extends AnchorPane {
     private Image socketImage = new Image(this.getClass().getResourceAsStream("/images/Socket.png"));
     // Image credits: NUS Students' Computing Club, retrieved: https://www.facebook.com/photo.php?fbid=952757871459097
 
-    @FXML
-    public void initialize() {
-        // scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-    }
-
     /** Injects the Socket instance */
     public void setSocket(Socket s) {
         socket = s;

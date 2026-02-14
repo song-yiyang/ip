@@ -16,7 +16,7 @@ public class Socket {
     private Command commandType = Command.UNKNOWN;
 
     /**
-     * Simple initializer that initializes all variables: ui, storage, parser and taskList.
+     * Initializes all variables: ui, storage, parser and taskList.
      */
     public Socket() {
         ui = new Ui();
